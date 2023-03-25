@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { GqlContextT } from '../../src/index';
+import { GqlContextT } from '../../src/gql/index';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -17,7 +17,7 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query';
   /** Test query */
-  hello?: Maybe<Scalars['String']>;
+  hello: Scalars['String'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -104,7 +104,7 @@ export type ResolversParentTypes = ResolversObject<{
 }>;
 
 export type QueryResolvers<ContextType = GqlContextT, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  hello?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = GqlContextT> = ResolversObject<{

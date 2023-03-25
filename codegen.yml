@@ -10,5 +10,5 @@ generates:
     config:
       useIndexSignature: true
       # More on this below!
-      contextType: "../../src/index#GqlContextT"
+      contextType: "../../src/gql/index#GqlContextT"
 watch: true
