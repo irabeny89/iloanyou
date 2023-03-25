@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install PNPM
+        uses: pnpm/actions-setup@v2
+        with:
+          version: 7
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.X
+          cache: "pnpm"
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm compile
