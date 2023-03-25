@@ -10,7 +10,7 @@
 		"precompile": "pnpm clean && pnpm lint && pnpm test && pnpm generate & pnpm docs",
 		"lint": "eslint src",
 		"test": "jest",
-		"pentest": "env-cmd pnpm snyk test",
+		"pentest": "pnpm env-cmd -e development pnpm snyk test",
 		"clean": "rm -rf dist docs",
 		"generate": "graphql-codegen --config codegen.yml",
 		"generate:watch": "graphql-codegen -w --config codegen.yml",
