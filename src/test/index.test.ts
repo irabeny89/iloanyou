@@ -1,8 +1,8 @@
-import {describe, it, expect} from "@jest/globals"
+import { describe, it, expect } from "@jest/globals"
 import resolvers from "../gql/resolvers"
 
-describe("resolvers", () => {
-  it("should return hello", () => {
+describe("Sample GraphQL hello query", () => {
+  it("should return hi", () => {
     expect(resolvers.Query.hello()).toBe("hi")
   })
 })
