@@ -1,61 +1,60 @@
 {
-	"root": true,
-	"parser": "@typescript-eslint/parser",
-	"extends": [
-		"eslint:recommended",
-		"plugin:@typescript-eslint/recommended",
-		"prettier"
-	],
-	"plugins": ["import"],
-	"rules": {
-		"no-empty": "off",
-		"no-console": "off",
-		"no-prototype-builtins": "off",
-		"no-useless-constructor": "off",
-		"no-unused-vars": "off",
-		"object-shorthand": ["error", "always"],
-		"@typescript-eslint/explicit-module-boundary-types": "off",
-		"@typescript-eslint/no-unused-vars": "error",
-		"@typescript-eslint/no-use-before-define": "error",
-		"@typescript-eslint/no-namespace": "off",
-		"no-unreachable-loop": "error",
-		"@typescript-eslint/no-empty-interface": "error",
-		"prefer-arrow-callback": "error",
-		"@typescript-eslint/no-empty-function": "error",
-		"@typescript-eslint/no-var-requires": "off",
-		"@typescript-eslint/no-explicit-any": "off",
-		"@typescript-eslint/no-non-null-assertion": "off",
-		"@typescript-eslint/explicit-function-return-type": "off",
-		"@typescript-eslint/ban-ts-ignore": "off",
-		"@typescript-eslint/ban-types": "off",
-		"no-lonely-if": "error",
-		"import/no-extraneous-dependencies": [
-			"error",
-			{
-				"devDependencies": ["**/*.test.ts", "**/*.spec.ts", "**/test/**/*.ts"]
-			}
-		]
-	},
-	"env": {
-		"es6": true,
-		"node": true
-	},
-	"overrides": [
-		{
-			"files": [
-				"**/tests/**/*.ts",
-				"**/graphql-codegen-testing/**/*.ts",
-				"*.spec.ts"
-			],
-			"env": {
-				"jest": true
-			},
-			"rules": {
-				"no-unused-vars": "off",
-				"@typescript-eslint/no-unused-vars": "off",
-				"import/no-extraneous-dependencies": "off"
-			}
-		}
-	],
-	"ignorePatterns": ["dist", "docs", "node_modules", "dev-test", "test-files"]
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-empty": "off",
+    "no-console": "off",
+    "no-prototype-builtins": "off",
+    "no-useless-constructor": "off",
+    "no-unused-vars": "off",
+    "object-shorthand": ["error", "always"],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-use-before-define": "error",
+    "@typescript-eslint/no-namespace": "off",
+    "no-unreachable-loop": "error",
+    "@typescript-eslint/no-empty-interface": "error",
+    "prefer-arrow-callback": "error",
+    "@typescript-eslint/no-empty-function": "error",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    "no-lonely-if": "error"
+  },
+  "env": {
+    "es6": true,
+    "es2022": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/tests/**/*.ts",
+        "**/graphql-codegen-testing/**/*.ts",
+        "*.spec.ts"
+      ],
+      "env": {
+        "jest": true
+      },
+      "rules": {
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "import/no-extraneous-dependencies": "off"
+      }
+    }
+  ],
+  "ignorePatterns": ["dist", "docs", "node_modules", "src/__generated__"]
 }
