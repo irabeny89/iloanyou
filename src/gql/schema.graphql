@@ -1,4 +1,105 @@
 type Query {
-  """Test query"""
+  "Run test query"
   hello: String!
+  "Register new user"
+  signup(signupInput: SignupInput!): ResponseInterface!
+  "Old user login"
+  signin(signinInput: SigninInput!): ResponseInterface!
+}
+
+type Mutation {
+  "Store details of users with OTP"
+  signupValidatedUser(otp: String!): ResponseInterface!
+}
+
+enum StatusEnum {
+  "Successful request"
+  OK
+  "Error with the request"
+  CLIENT_ERROR
+  "Error with the server"
+  SERVER_ERROR
+}
+
+interface ResponseInterface {
+  "HTTP status code"
+  code: Int!
+  "Custom status"
+  status: StatusEnum!
+  "Message about the request"
+  message: String!
+}
+
+input SignupInput {
+  "User email"
+  email: String!
+  "User name"
+  username: String!
+  "User password"
+  password: String!
+}
+
+input SigninInput {
+  "User name"
+  username: String!
+  "User password"
+  password: String!
+}
+
+type SignupData {
+  "Test email account username"
+  testEmailUsername: String!
+  "Test email account password"
+  testEmailPassword: String!
+  "Test email message link to get the OTP for signup completion"
+  testEmailMessageLink: String!
+}
+
+type SigninData {
+  "Token given to registered users"
+  accessToken: String!
+}
+
+type SignupValidatedUserData {
+  "User data id"
+  id: ID!
+  "User email"
+  email: String!
+  "User name"
+  username: String!
+  "User wallet balance"
+  balance: Float!
+}
+
+type SignupResponse implements ResponseInterface {
+  "HTTP status code"
+  code: Int!
+  "Custom status"
+  status: StatusEnum!
+  "Message about the request"
+  message: String!
+  "Response data"
+  data: SignupData!
+}
+
+type SigninResponse implements ResponseInterface {
+  "HTTP status code"
+  code: Int!
+  "Custom status"
+  status: StatusEnum!
+  "Message about the request"
+  message: String!
+  "Response data"
+  data: SigninData!
+}
+
+type SignupValidatedUserResponse implements ResponseInterface {
+  "HTTP status code"
+  code: Int!
+  "Custom status"
+  status: StatusEnum!
+  "Message about the request"
+  message: String!
+  "Response data"
+  data: SignupValidatedUserData!
 }
