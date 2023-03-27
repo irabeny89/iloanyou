@@ -60,7 +60,7 @@ Run the script to run test:
 pnpm test
 ```
 
-To test vulnerabilties in packages we can use package managers audit command like `npm audit` or `pnpm audit` etc. But we have Snyk setup(CI and on local development) to tests for our repository vulnerabilities.
+To test vulnerabilties in packages we can use package managers audit command like `npm audit` or `pnpm audit` etc. But we have Snyk setup locally and GitHub CodeQL (Security tab on GitHub) on Remote to scan for our repository vulnerabilities.
 Run the script setup in [package.json](package.json) file
 
 ```bash
@@ -78,7 +78,9 @@ pnpm pentest
 
 There are [Github](https://github.com) Actions to handle unit and integration tests, vulnerability tests, build tests, and release versioning.
 
-> N.B: make sure you have your [Snyk](https://snyk.io) and [Github](https://github.com) secret tokens for versioning and vulnerability tests.
+Please before you push your commits use changesets/cli to write your changelogs e.g `pnpm changeset` and follow the prompts. The versioning will be handled by the GitHub Actions Release workflow.
+
+> N.B: make sure you have your [Github](https://github.com) secret tokens for versioning and vulnerability tests.
 
 ---
 
