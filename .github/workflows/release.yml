@@ -8,7 +8,13 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
+# IMPORTANT: prevent this action from running on forks
   release:
+    if: github.repository == 'irabeny89/nodejs-typescript-server-starter'
+    permissions:
+      contents: write # to create release (changesets/action)
+      pull-requests: write # to create pull request (changesets/action)
+      
     name: Release
     runs-on: ubuntu-latest
     steps:
@@ -21,7 +27,7 @@ jobs:
           node-version: 18
 
       - name: Install PNPM
-        uses: pnpm/actions-setup@v2
+        uses: pnpm/action-setup@v2
         id: pnpm-install
         with:
           version: 7.25.0
@@ -45,6 +51,6 @@ jobs:
         run: pnpm install
 
       - name: Create Release Pull Request
-        uses: changesets/actions@v1
+        uses: changesets/action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
