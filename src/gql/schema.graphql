@@ -1,15 +1,29 @@
 type Query {
   "Run test query"
   hello: String!
+  "Get otp to be sent to an email"
+  getSignupOtp(email: String!): ResponseInterface!
   "Register new user"
   signup(signupInput: SignupInput!): ResponseInterface!
   "Old user login"
   signin(signinInput: SigninInput!): ResponseInterface!
+  "Get a loan data"
+  getLoanTerm(getLoanTermInput: GetLoanTermInput!): ResponseInterface!
 }
 
 type Mutation {
-  "Store details of users with OTP"
-  signupValidatedUser(otp: String!): ResponseInterface!
+  "Create a loan term"
+  createLoanTerm(createLoanTermInput: CreateLoanTermInput!): ResponseInterface!
+  "Accept the loan term"
+  acceptLoanTerm(acceptLoanTermInput: AcceptLoanTermInput!): ResponseInterface!
+  "Decline the loan"
+  declineLoanTerm(
+    declineLoanTermInput: DeclineLoanTermInput!
+  ): ResponseInterface!
+  "Authorize created loan term"
+  authorizeLoan(authorizeLoanInput: AuthorizeLoanInput!): ResponseInterface!
+  "Repay loan"
+  repayLoan(repayLoanInput: RepayLoanInput!): ResponseInterface!
 }
 
 enum StatusEnum {
@@ -22,12 +36,7 @@ enum StatusEnum {
 }
 
 interface ResponseInterface {
-  "HTTP status code"
-  code: Int!
-  "Custom status"
-  status: StatusEnum!
-  "Message about the request"
-  message: String!
+  responseMetaData: ResponseMetaData!
 }
 
 input SignupInput {
@@ -37,16 +46,88 @@ input SignupInput {
   username: String!
   "User password"
   password: String!
+  "One time password retrieved from email"
+  otp: String!
 }
 
 input SigninInput {
-  "User name"
-  username: String!
+  "User email"
+  email: String!
   "User password"
   password: String!
 }
 
-type SignupData {
+input GetLoanTermInput {
+  "Document id"
+  loanId: ID!
+}
+
+input CreateLoanTermInput {
+  "Amount to loan out"
+  amount: Float!
+  "Loan deadline"
+  deadline: String!
+  "Who benefits the loan"
+  loanee: ID!
+}
+
+input AuthorizeLoanInput {
+  "User password"
+  password: String!
+  "The loan to authorize id"
+  loanId: String!
+}
+
+input RepayLoanInput {
+  "Id of loan to settle"
+  loanId: String!
+  "Amount owed to pay back"
+  amount: Float!
+}
+
+input AcceptLoanTermInput {
+  "The loan to accept"
+  loanId: ID!
+}
+
+input DeclineLoanTermInput {
+  "The loan to decline"
+  loanId: ID!
+}
+
+type User {
+  "Document id"
+  id: ID!
+  "User name"
+  username: String!
+  "User email"
+  email: String!
+  "Date registered"
+  createdAt: String!
+  "Date updated data"
+  updatedAt: String!
+}
+
+type ResponseMetaData {
+  "HTTP status code"
+  code: Int!
+  "Custom status"
+  status: StatusEnum!
+  "Message about the request"
+  message: String!
+}
+
+type SignupReturnData {
+  "Access token encrypted with user data"
+  accessToken: String!
+}
+
+type SigninReturnData {
+  "Access token encrypted with user data"
+  accessToken: String!
+}
+
+type GetSignupOtpReturnData {
   "Test email account username"
   testEmailUsername: String!
   "Test email account password"
@@ -55,51 +136,67 @@ type SignupData {
   testEmailMessageLink: String!
 }
 
-type SigninData {
-  "Token given to registered users"
-  accessToken: String!
+type GetLoanTermReturnData {
+  "Document id"
+  id: ID!
+  "Amount loaned"
+  amount: Float!
+  "Loan term pass key"
+  passkey: String!
+  "Loan repayment deadline"
+  deadline: String!
+  "True if loan is accepted by the loanee and false otherwise"
+  isAccepted: Boolean!
+  "True if loan is authorized by the loaner and false otherwise"
+  isAuthorized: Boolean!
+  "The user giving loan"
+  loaner: User!
+  "The the user getting the loan"
+  loanee: User!
+  "The date the loan was created"
+  createdAt: String!
+  "The date the loan was updated"
+  updatedAt: String!
 }
 
-type SignupValidatedUserData {
-  "User data id"
+type CreateLoanTermReturnData {
+  "Loan document id"
   id: ID!
-  "User email"
-  email: String!
-  "User name"
-  username: String!
-  "User wallet balance"
-  balance: Float!
+  "Unique loan term pass-key"
+  passkey: String!
 }
 
 type SignupResponse implements ResponseInterface {
-  "HTTP status code"
-  code: Int!
-  "Custom status"
-  status: StatusEnum!
-  "Message about the request"
-  message: String!
-  "Response data"
-  data: SignupData!
+  "Response meta data like request header data"
+  responseMetaData: ResponseMetaData!
+  "Request actual returned data"
+  signupReturnData: SignupReturnData
 }
 
 type SigninResponse implements ResponseInterface {
-  "HTTP status code"
-  code: Int!
-  "Custom status"
-  status: StatusEnum!
-  "Message about the request"
-  message: String!
-  "Response data"
-  data: SigninData!
+  "Response meta data like request header data"
+  responseMetaData: ResponseMetaData!
+  "Request actual returned data"
+  signinReturnData: SigninReturnData
 }
 
-type SignupValidatedUserResponse implements ResponseInterface {
-  "HTTP status code"
-  code: Int!
-  "Custom status"
-  status: StatusEnum!
-  "Message about the request"
-  message: String!
-  "Response data"
-  data: SignupValidatedUserData!
+type GetSignupOtpResponse implements ResponseInterface {
+  "Response meta data like request header data"
+  responseMetaData: ResponseMetaData!
+  "Request actual returned data"
+  getSignupOtpReturnData: GetSignupOtpReturnData
+}
+
+type GetLoanTermResponse implements ResponseInterface {
+  "Response meta data like request header data"
+  responseMetaData: ResponseMetaData!
+  "Request actual returned data"
+  getLoanTermReturnData: GetLoanTermReturnData
+}
+
+type CreateLoanTermResponse implements ResponseInterface {
+  "Response meta data like request header data"
+  responseMetaData: ResponseMetaData!
+  "Request actual returned data"
+  createLoanTermReturnData: CreateLoanTermReturnData
 }
