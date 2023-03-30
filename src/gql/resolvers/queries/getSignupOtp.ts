@@ -49,7 +49,7 @@ const getResponse = async (email: string) => {
 
 const getSignupOtp: QueryResolvers["getSignupOtp"] = {
   resolve: (_, { email }) => getResponse(email)
-    .catch((_) => ({
+    .catch(() => ({
       responseMetaData: genericErrorMessages.ERROR_5xx,
       getSignupOtpReturnData: null
     }))

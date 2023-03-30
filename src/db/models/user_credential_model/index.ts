@@ -6,10 +6,7 @@ import {
   env,
   passwordHashLength,
 } from "../../../config";
-import { scrypt, timingSafeEqual } from "node:crypto";
-import {
-  UserCredentialModelT,
-} from "./user_credential_model_type";
+import { scrypt } from "node:crypto";
 import { promisify } from "node:util";
 import Mail from "nodemailer/lib/mailer";
 import { AccessTokenPayloadT } from "../../../gql/gql_common_type";
