@@ -9,6 +9,7 @@ import {
   StatusEnum,
 } from "../../../__generated__/resolvers-types";
 import { GqlContextT } from "../../gql_common_type";
+import createJwtErrorResponseMetaData from "../../../utils/createJwtErrorResponseMetaData";
 
 const CREATE_LOAN_TERM_ERROR_MESSAGE =
   "Insufficient balance.";
@@ -53,12 +54,7 @@ const getErrorResponse = (error: any) => {
   const errorMessage = (error.message as string) ?? "";
 
   // create client error repsonse meta data
-  const forbiddenError: ResponseMetaData = {
-    code: 403,
-    status: StatusEnum.ClientError,
-    message: errorMessage,
-  };
-
+  
   const insufficientBalanceError: ResponseMetaData = {
     code: 400,
     status: StatusEnum.ClientError,
@@ -68,7 +64,7 @@ const getErrorResponse = (error: any) => {
 
   // map all client error
   const clientErrorTemplate: { [k: string]: ResponseMetaData } = {
-    "invalid token": forbiddenError,
+    ...createJwtErrorResponseMetaData(error),
     [CREATE_LOAN_TERM_ERROR_MESSAGE]: insufficientBalanceError
   };
 
