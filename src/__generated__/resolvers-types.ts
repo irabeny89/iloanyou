@@ -115,15 +115,17 @@ export type GetSignupOtpReturnData = {
 export type Mutation = {
   __typename?: 'Mutation';
   /** Accept the loan term */
-  acceptLoanTerm: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse;
+  acceptLoanTerm: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse | TopupBalanceResponse;
   /** Authorize created loan term */
-  authorizeLoan: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse;
+  authorizeLoan: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse | TopupBalanceResponse;
   /** Create a loan term */
-  createLoanTerm: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse;
+  createLoanTerm: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse | TopupBalanceResponse;
   /** Decline the loan */
-  declineLoanTerm: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse;
+  declineLoanTerm: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse | TopupBalanceResponse;
   /** Repay loan */
-  repayLoan: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse;
+  repayLoan: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse | TopupBalanceResponse;
+  /** Top up wallet balance */
+  topupBalance: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse | TopupBalanceResponse;
 };
 
 
@@ -151,18 +153,23 @@ export type MutationRepayLoanArgs = {
   repayLoanInput: RepayLoanInput;
 };
 
+
+export type MutationTopupBalanceArgs = {
+  topupBalanceInput: TopupBalanceInput;
+};
+
 export type Query = {
   __typename?: 'Query';
   /** Get a loan data */
-  getLoanTerm: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse;
+  getLoanTerm: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse | TopupBalanceResponse;
   /** Get otp to be sent to an email */
-  getSignupOtp: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse;
+  getSignupOtp: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse | TopupBalanceResponse;
   /** Run test query */
   hello: Scalars['String'];
   /** Old user login */
-  signin: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse;
+  signin: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse | TopupBalanceResponse;
   /** Register new user */
-  signup: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse;
+  signup: CreateLoanTermResponse | GetLoanTermResponse | GetSignupOtpResponse | SigninResponse | SignupResponse | TopupBalanceResponse;
 };
 
 
@@ -260,6 +267,25 @@ export enum StatusEnum {
   /** Error with the server */
   ServerError = 'SERVER_ERROR'
 }
+
+export type TopupBalanceInput = {
+  /** Amount to add */
+  amount: Scalars['Float'];
+};
+
+export type TopupBalanceResponse = ResponseInterface & {
+  __typename?: 'TopupBalanceResponse';
+  /** Response meta data like request header data */
+  responseMetaData: ResponseMetaData;
+  /** Request actual returned data */
+  topupBalanceReturnData?: Maybe<TopupBalanceReturnData>;
+};
+
+export type TopupBalanceReturnData = {
+  __typename?: 'TopupBalanceReturnData';
+  /** New balance */
+  balance: Scalars['Float'];
+};
 
 export type User = {
   __typename?: 'User';
@@ -364,7 +390,7 @@ export type ResolversTypes = ResolversObject<{
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   RepayLoanInput: RepayLoanInput;
-  ResponseInterface: ResolversTypes['CreateLoanTermResponse'] | ResolversTypes['GetLoanTermResponse'] | ResolversTypes['GetSignupOtpResponse'] | ResolversTypes['SigninResponse'] | ResolversTypes['SignupResponse'];
+  ResponseInterface: ResolversTypes['CreateLoanTermResponse'] | ResolversTypes['GetLoanTermResponse'] | ResolversTypes['GetSignupOtpResponse'] | ResolversTypes['SigninResponse'] | ResolversTypes['SignupResponse'] | ResolversTypes['TopupBalanceResponse'];
   ResponseMetaData: ResolverTypeWrapper<ResponseMetaData>;
   SigninInput: SigninInput;
   SigninResponse: ResolverTypeWrapper<SigninResponse>;
@@ -374,6 +400,9 @@ export type ResolversTypes = ResolversObject<{
   SignupReturnData: ResolverTypeWrapper<SignupReturnData>;
   StatusEnum: StatusEnum;
   String: ResolverTypeWrapper<Scalars['String']>;
+  TopupBalanceInput: TopupBalanceInput;
+  TopupBalanceResponse: ResolverTypeWrapper<TopupBalanceResponse>;
+  TopupBalanceReturnData: ResolverTypeWrapper<TopupBalanceReturnData>;
   User: ResolverTypeWrapper<User>;
 }>;
 
@@ -397,7 +426,7 @@ export type ResolversParentTypes = ResolversObject<{
   Mutation: {};
   Query: {};
   RepayLoanInput: RepayLoanInput;
-  ResponseInterface: ResolversParentTypes['CreateLoanTermResponse'] | ResolversParentTypes['GetLoanTermResponse'] | ResolversParentTypes['GetSignupOtpResponse'] | ResolversParentTypes['SigninResponse'] | ResolversParentTypes['SignupResponse'];
+  ResponseInterface: ResolversParentTypes['CreateLoanTermResponse'] | ResolversParentTypes['GetLoanTermResponse'] | ResolversParentTypes['GetSignupOtpResponse'] | ResolversParentTypes['SigninResponse'] | ResolversParentTypes['SignupResponse'] | ResolversParentTypes['TopupBalanceResponse'];
   ResponseMetaData: ResponseMetaData;
   SigninInput: SigninInput;
   SigninResponse: SigninResponse;
@@ -406,6 +435,9 @@ export type ResolversParentTypes = ResolversObject<{
   SignupResponse: SignupResponse;
   SignupReturnData: SignupReturnData;
   String: Scalars['String'];
+  TopupBalanceInput: TopupBalanceInput;
+  TopupBalanceResponse: TopupBalanceResponse;
+  TopupBalanceReturnData: TopupBalanceReturnData;
   User: User;
 }>;
 
@@ -460,6 +492,7 @@ export type MutationResolvers<ContextType = GqlContextT, ParentType extends Reso
   createLoanTerm?: Resolver<ResolversTypes['ResponseInterface'], ParentType, ContextType, RequireFields<MutationCreateLoanTermArgs, 'createLoanTermInput'>>;
   declineLoanTerm?: Resolver<ResolversTypes['ResponseInterface'], ParentType, ContextType, RequireFields<MutationDeclineLoanTermArgs, 'declineLoanTermInput'>>;
   repayLoan?: Resolver<ResolversTypes['ResponseInterface'], ParentType, ContextType, RequireFields<MutationRepayLoanArgs, 'repayLoanInput'>>;
+  topupBalance?: Resolver<ResolversTypes['ResponseInterface'], ParentType, ContextType, RequireFields<MutationTopupBalanceArgs, 'topupBalanceInput'>>;
 }>;
 
 export type QueryResolvers<ContextType = GqlContextT, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
@@ -471,7 +504,7 @@ export type QueryResolvers<ContextType = GqlContextT, ParentType extends Resolve
 }>;
 
 export type ResponseInterfaceResolvers<ContextType = GqlContextT, ParentType extends ResolversParentTypes['ResponseInterface'] = ResolversParentTypes['ResponseInterface']> = ResolversObject<{
-  __resolveType: TypeResolveFn<'CreateLoanTermResponse' | 'GetLoanTermResponse' | 'GetSignupOtpResponse' | 'SigninResponse' | 'SignupResponse', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'CreateLoanTermResponse' | 'GetLoanTermResponse' | 'GetSignupOtpResponse' | 'SigninResponse' | 'SignupResponse' | 'TopupBalanceResponse', ParentType, ContextType>;
   responseMetaData?: Resolver<ResolversTypes['ResponseMetaData'], ParentType, ContextType>;
 }>;
 
@@ -504,6 +537,17 @@ export type SignupReturnDataResolvers<ContextType = GqlContextT, ParentType exte
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type TopupBalanceResponseResolvers<ContextType = GqlContextT, ParentType extends ResolversParentTypes['TopupBalanceResponse'] = ResolversParentTypes['TopupBalanceResponse']> = ResolversObject<{
+  responseMetaData?: Resolver<ResolversTypes['ResponseMetaData'], ParentType, ContextType>;
+  topupBalanceReturnData?: Resolver<Maybe<ResolversTypes['TopupBalanceReturnData']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type TopupBalanceReturnDataResolvers<ContextType = GqlContextT, ParentType extends ResolversParentTypes['TopupBalanceReturnData'] = ResolversParentTypes['TopupBalanceReturnData']> = ResolversObject<{
+  balance?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type UserResolvers<ContextType = GqlContextT, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -528,6 +572,8 @@ export type Resolvers<ContextType = GqlContextT> = ResolversObject<{
   SigninReturnData?: SigninReturnDataResolvers<ContextType>;
   SignupResponse?: SignupResponseResolvers<ContextType>;
   SignupReturnData?: SignupReturnDataResolvers<ContextType>;
+  TopupBalanceResponse?: TopupBalanceResponseResolvers<ContextType>;
+  TopupBalanceReturnData?: TopupBalanceReturnDataResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 }>;
 
