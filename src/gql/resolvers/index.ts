@@ -12,10 +12,10 @@ const resolvers: Resolvers = {
     hello: () => "hi",
     getSignupOtp,
     signup,
-    signin
+    signin,
   },
   Mutation: {
-    createLoanTerm
+    createLoanTerm,
   },
 };
 

@@ -5,7 +5,8 @@ const ResponseInterface: ResponseInterfaceResolvers = {
     if ("getSignupOtpReturnData" in parentObject) return "GetSignupOtpResponse";
     if ("signupReturnData" in parentObject) return "SignupResponse";
     if ("signinReturnData" in parentObject) return "SigninResponse";
-    if ("createLoanTermReturnData" in parentObject) return "CreateLoanTermResponse";
+    if ("createLoanTermReturnData" in parentObject)
+      return "CreateLoanTermResponse";
     return null;
   },
 };
