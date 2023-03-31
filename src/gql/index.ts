@@ -14,7 +14,9 @@ import { GqlContextT } from "./gql_common_type";
  */
 export const createGqlContext:
   | ContextFunction<[ExpressContextFunctionArgument], BaseContext>
-  | undefined = async ({ req }) => ({ token: req.headers.authorization });
+  | undefined = async ({ req }) => ({
+  token: req.headers.authorization?.replace("Bearer ", ""),
+});
 
 /**
  * ApolloServer initialization using drain plugin
