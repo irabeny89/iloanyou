@@ -13,7 +13,7 @@ const Loan = model(
       },
       passkey: {
         type: String,
-        default: () => randomBytes(4).toString("hex")
+        default: () => randomBytes(4).toString("hex"),
       },
       deadline: {
         type: Date,
@@ -30,12 +30,12 @@ const Loan = model(
       loaner: {
         type: Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        required: true,
       },
       loanee: {
         type: Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        required: true,
       },
     },
     { timestamps: true }
