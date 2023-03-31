@@ -47,8 +47,9 @@ const UserCredential = model(
          * @returns true for valid or false for invalid
          */
         validatePassword(password: string): boolean {
-          const errorMessage = `Number of letters in Password should be more than ${allowedPasswordLength - 1
-            }`;
+          const errorMessage = `Number of letters in Password should be more than ${
+            allowedPasswordLength - 1
+          }`;
 
           if (password.length < allowedPasswordLength)
             throw new Error(errorMessage);
@@ -70,18 +71,21 @@ const UserCredential = model(
         }),
         /**
          * Creates a signed access token with the provided payload object
-         * 
+         *
          * @param accessTokenPayload {AccessTokenPayloadT} - claims to sign with token
          * @returns a signed access token
          */
-        createAccessToken: (accessTokenPayload: AccessTokenPayloadT): string => sign(accessTokenPayload, env.jwtSecret!, { expiresIn: "365d" }),
+        createAccessToken: (accessTokenPayload: AccessTokenPayloadT): string =>
+          sign(accessTokenPayload, env.jwtSecret!, { expiresIn: "365d" }),
         /**
          * verifies and decode token and return its payload
-         * 
+         *
          * @param token token to verify
          * @returns token payload
          */
-        verifyAccessToken: (token: string) => verify(token, env.jwtSecret!) as unknown as AccessTokenPayloadT & JwtPayload
+        verifyAccessToken: (token: string) =>
+          verify(token, env.jwtSecret!) as unknown as AccessTokenPayloadT &
+            JwtPayload,
       },
     }
   )

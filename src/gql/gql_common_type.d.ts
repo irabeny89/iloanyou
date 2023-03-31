@@ -6,5 +6,7 @@ export type GqlContextT = {
   token?: string;
 };
 
-export type AccessTokenPayloadT = Pick<UserDbDataT, "email" | "username"> & Record<"userId", string>
-  & Pick<UserCredentialDbDataT, "role"> & JwtPayload
+export type AccessTokenPayloadT = Pick<UserDbDataT, "email" | "username"> &
+  Record<"userId", string> &
+  Pick<UserCredentialDbDataT, "role"> &
+  JwtPayload;

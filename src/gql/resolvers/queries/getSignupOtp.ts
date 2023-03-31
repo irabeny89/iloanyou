@@ -12,25 +12,23 @@ import {
   StatusEnum,
 } from "../../../__generated__/resolvers-types";
 
-
 // N.B: for development purpose we generated free email service
 // for client to check their otp. Please use real config in production
 
-export type OtpPayloadT = Record<"otp" | "email", string>
+export type OtpPayloadT = Record<"otp" | "email", string>;
 
 const getResponse = async (email: string) => {
   const otpPayload: OtpPayloadT = {
     otp: randomBytes(4).toString("hex"),
-    email
-  }
+    email,
+  };
 
   await createTransport(nodemailerAppLocalServerConfig).sendMail(
-    UserCredential
-      .getOtpVerificationMail(
-        // // 900 seconds === 15 minutes; 1 === 1 seconds
-        sign(otpPayload, env.jwtSecret!, { expiresIn: 900 }),
-        email
-      )
+    UserCredential.getOtpVerificationMail(
+      // // 900 seconds === 15 minutes; 1 === 1 seconds
+      sign(otpPayload, env.jwtSecret!, { expiresIn: 900 }),
+      email
+    )
   );
 
   return {
@@ -45,14 +43,14 @@ const getResponse = async (email: string) => {
       testEmailUsername: "testuser",
     },
   };
-}
+};
 
 const getSignupOtp: QueryResolvers["getSignupOtp"] = {
-  resolve: (_, { email }) => getResponse(email)
-    .catch(() => ({
+  resolve: (_, { email }) =>
+    getResponse(email).catch(() => ({
       responseMetaData: genericErrorMessages.ERROR_5xx,
-      getSignupOtpReturnData: null
-    }))
-}
+      getSignupOtpReturnData: null,
+    })),
+};
 
 export default getSignupOtp;
