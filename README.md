@@ -9,12 +9,12 @@ After cloning and installing dependencies, then run the start or dev script:
 ```bash
 # start dev server and run `pnpm generate:watch`
 # in another terminal for graphql codegen
-pnpn dev
+pnpm dev
 ```
 
 ```bash
 # start the server by compiling and running the javascript.
-pnpn start
+pnpm start
 ```
 
 > N.B: any Package Manager can be used eg `npm` or `yarn`.
